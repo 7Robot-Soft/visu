@@ -19,7 +19,7 @@ file(GLOB cmd_sources "cmd/*.cpp")
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(.)
 
-add_library(cmdvisu_lib
+add_library(cmdvisu
     SHARED
     ${sources}
     ${cmd_sources}
