@@ -4,6 +4,8 @@
 
 #include <string>
 
+#include "ShapedObject.h"
+
 namespace visu {
 
 
@@ -31,7 +33,7 @@ public:
    * @param  z
    * @param  theta
    */
-  virtual void moveObj (string id, float x, float y, float z, float theta )
+  virtual void moveObj (std::string id, float x, float y, float z, float theta )
   {
   }
 
@@ -39,7 +41,7 @@ public:
   /**
    * @param  id
    */
-  virtual void highlightObj (string id )
+  virtual void highlightObj (std::string id )
   {
   }
 

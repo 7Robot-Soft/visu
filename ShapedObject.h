@@ -1,7 +1,7 @@
 
 #ifndef SHAPEDOBJECT_H
 #define SHAPEDOBJECT_H
-#include "visu/Shape.h"
+#include "Shape.h"
 
 #include <string>
 
@@ -13,7 +13,7 @@ namespace visu {
   * 
   */
 
-class ShapedObject : virtual public Shape
+class ShapedObject : public Shape
 {
 public:
 
@@ -41,7 +41,7 @@ public:
   float y;
   float z;
   float height;
-  string id;
+  std::string id;
 
 protected:
 
@@ -51,7 +51,7 @@ protected:
   // Protected attributes
   //  
 
-  visu::Shape shape;
+  Shape shape;
 public:
 
 protected:
@@ -77,8 +77,6 @@ public:
 
 private:
 
-
-  void initAttributes ( ) ;
 
 };
 }; // end of package namespace

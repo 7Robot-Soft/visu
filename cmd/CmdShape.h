@@ -1,10 +1,12 @@
 
-#ifndef SHAPE_H
-#define SHAPE_H
-#include "visu/Shape.h"
+#ifndef CMDSHAPE_H
+#define CMDSHAPE_H
+#include "../Shape.h"
+#include "../ShapedObject.h"
 
 #include <string>
-using visu::Shape;
+
+using namespace visu;
 
 namespace visu_cmd {
 
@@ -14,7 +16,7 @@ namespace visu_cmd {
   * 
   */
 
-class Shape : virtual public Shape
+class CmdShape : virtual public Shape
 {
 public:
 
@@ -25,12 +27,12 @@ public:
   /**
    * Empty Constructor
    */
-  Shape ( );
+  CmdShape ( );
 
   /**
    * Empty Destructor
    */
-  virtual ~Shape ( );
+  virtual ~CmdShape ( );
 
   // Static Public attributes
   //  
@@ -77,4 +79,4 @@ private:
 };
 }; // end of package namespace
 
-#endif // SHAPE_H
+#endif // CMDSHAPE_H

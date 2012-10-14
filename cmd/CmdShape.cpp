@@ -1,12 +1,14 @@
-#include "View.h"
+#include "CmdShape.h"
+
+namespace visu_cmd {
 
 // Constructors/Destructors
 //  
 
-View::View ( ) {
+CmdShape::CmdShape ( ) {
 }
 
-View::~View ( ) { }
+CmdShape::~CmdShape ( ) { }
 
 //  
 // Methods
@@ -21,3 +23,4 @@ View::~View ( ) { }
 //  
 
 
+};

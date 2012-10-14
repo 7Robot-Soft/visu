@@ -1,10 +1,11 @@
 #include "ShapedObject.h"
 
+namespace visu {
+
 // Constructors/Destructors
 //  
 
 ShapedObject::ShapedObject ( ) {
-initAttributes();
 }
 
 ShapedObject::~ShapedObject ( ) { }
@@ -21,6 +22,5 @@ ShapedObject::~ShapedObject ( ) { }
 // Other methods
 //  
 
-void ShapedObject::initAttributes ( ) {
-}
+};
 

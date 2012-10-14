@@ -1,10 +1,12 @@
 
-#ifndef VIEW_H
-#define VIEW_H
-#include "visu/View.h"
+#ifndef CMDVIEW_H
+#define CMDVIEW_H
+#include "../View.h"
+#include "../ShapedObject.h"
 
 #include <string>
-using visu::View;
+
+using namespace visu;
 
 namespace visu_cmd {
 
@@ -14,7 +16,7 @@ namespace visu_cmd {
   * 
   */
 
-class View : virtual public View
+class CmdView : public View
 {
 public:
 
@@ -25,12 +27,16 @@ public:
   /**
    * Empty Constructor
    */
-  View ( );
+  CmdView ( );
 
   /**
    * Empty Destructor
    */
-  virtual ~View ( );
+  virtual ~CmdView ( );
+  
+  void moveObj (std::string id, float x, float y, float z, float theta );
+  void highlightObj (std::string id );
+  void addShapedObject (ShapedObject* obj );
 
   // Static Public attributes
   //  
@@ -77,4 +83,4 @@ private:
 };
 }; // end of package namespace
 
-#endif // VIEW_H
+#endif // CMDVIEW_H
