@@ -1,18 +1,24 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# fichier définissant l'interface générale
+"""
+Fichier définissant l'interface générale
+"""
+
 import sys
 
 from PyQt4.QtCore import *
 from PyQt4 import QtGui, QtCore
 from PyQt4.QtGui import *
+# TODO : nettoyer les import
 
 WINDOW_WIDTH  = 600
 WINDOW_HEIGHT = 400
 
 class Interface(QtGui.QMainWindow):
-    
+    """
+    Interface principale
+    """
     def __init__(self):
         self.app = QtGui.QApplication(sys.argv)
         super().__init__()
@@ -31,13 +37,32 @@ class Interface(QtGui.QMainWindow):
         self.setCentralWidget(self.plateauView)
         
         self.robot = self.plateauView.addItemToScene("im/robot.png", 30, 10, 0, 1)
+        
+        
+        #~ self.moveRotateSignal = MoveRorateSignal()
+        #~ self.moveRotateSignal.signal.connect(self.moveRotateRobotSlot)
 
         self.show()
         
+    #~ def moveRotateRobot(self, x, y, theta):
+        #~ self.moveRotateSignal.emit(QtCore.SIGNAL("moveRotateRobot"), x, y, theta)
+        #~ print ("emit", x, y, theta)
+        
+    @pyqtSlot(float, float, float, name="moveRotateRobot")
+    def moveRotateRobotSlot(self, x, y, theta):
+        print ("received", x, y, theta)
+        self.plateauView.moveRotate(self.robot, x, y, theta)
+        
+
+#~ class MoveRorateSignal(QtCore.QObject):
+    #~ signal = QtCore.pyqtSignal(float, float, float, name="moveRotateRobot") 
         
 class Sprite:
     """
-    Pour gérer tous les objets avec des images.
+    Pour gérer tous les objets avec des images
+    Chaque objet a 2 positions : 
+        - sa position sur le plateau (self.x, self.y)
+        - sa position dans la fenêtre (self.item.x(), self.item.Y())
     """
     def __init__(self, item, x=0, y=0, theta=0, scale=1):
         self.item  = item # contient l'image et la position/rot/size du sprite sur la fenêtre
@@ -70,8 +95,7 @@ class Sprite:
 class PlateauView(QGraphicsView):
     def __init__(self, parent=None):
         """
-        QGraphicsView that will show an image scaled to the current widget size
-        using events
+        Plateau QGraphicsView redimmensionnable
         """
         super(PlateauView, self).__init__(parent)
         self.im_plateau = QPixmap('im/plateau.png')
@@ -98,10 +122,14 @@ class PlateauView(QGraphicsView):
         newItem = QtGui.QGraphicsPixmapItem(QtGui.QPixmap(sprite))
         self.scene.addItem(newItem)
         self.sprites.append(Sprite(newItem, x, y, theta, scale))    
-        return len(self.sprites)
+        return len(self.sprites)-1
 
  
     def moveRotate(self, sprite_id, x, y, theta):
+        """
+        Déplacer un sprite
+        @param: sprite_id (int) index du sprite renvoyé par addItemToScene()
+        """
         self.sprites[sprite_id].moveRotate(x, y, theta)
 	
     def resizeEvent(self, event):
@@ -116,19 +144,3 @@ class PlateauView(QGraphicsView):
         for sprite in self.sprites:
             sprite.resize(scale)
             
-            
-        
-
-        #~ # Si on diminue puis aggrandit l'image d'origine, elle sera floue
-        #~ newim_plateau = self.im_plateau
-#~ 
-        #~ newim_plateau = newim_plateau.scaled(size, Qt.KeepAspectRatio, Qt.SmoothTransformation) # IgnoreAspectRatio/KeepAspectRatio
-        #~ #self.centerOn(1, 1)
-        #~ #item.setPixmap(newim_plateau)
-        
-        
-
-        
-
-
-
