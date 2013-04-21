@@ -35,7 +35,7 @@ class Interface(QtGui.QMainWindow):
         self.plateauView.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.setCentralWidget(self.plateauView)
         
-        self.robot = self.plateauView.addItemToScene("im/robot.png", 30, 10, 0, 1)
+        self.robot = self.plateauView.addItemToScene("im/robot.png", 150, 100, 0, 1)
         
         
         self.show()
@@ -61,18 +61,18 @@ class Sprite:
         self.y = y
         self.theta = theta
         self.scale = scale
+        self.item.setTransformOriginPoint(QtCore.QPointF(self.origPixmap.width()/2, self.origPixmap.height()/2))
         
     def resize(self, scale):
         self.scale = scale
         self.redraw()
         
     def redraw(self):
-        self.item.setX(self.x*self.scale)
-        self.item.setY(self.y*self.scale)
-        self.item.setTransformOriginPoint(QtCore.QPointF(self.origPixmap.width()/2, self.origPixmap.height()/2))
-        self.item.setRotation(self.theta)
-        self.item.setTransformOriginPoint(QtCore.QPointF(0,0))
         self.item.setScale(self.scale)
+        self.item.setX(-self.origPixmap.width()/2+self.scale*self.origPixmap.width()/2+self.x*self.scale)
+        self.item.setY(-self.origPixmap.height()/2+self.scale*self.origPixmap.height()/2+self.y*self.scale)
+        self.item.setRotation(self.theta)
+        
         
     def moveRotate(self, x, y, theta):
         self.x = x
@@ -129,8 +129,11 @@ class PlateauView(QtGui.QGraphicsView):
         Callback appellé lors du redimmensionnement de la fenêtre
         """
         super(PlateauView, self).resizeEvent(event)
-
+        
         size = event.size()
+        
+        self.scene.setSceneRect(0,0,size.width(), size.height())
+        print (self.height())
         scale = min(size.width()/WINDOW_WIDTH, size.height()/WINDOW_HEIGHT)
 
         for sprite in self.sprites:
