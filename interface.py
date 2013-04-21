@@ -7,9 +7,9 @@ Fichier définissant l'interface générale
 
 import sys
 
-from PyQt4.QtCore import *
+
 from PyQt4 import QtGui, QtCore
-from PyQt4.QtGui import *
+
 # TODO : nettoyer les import
 
 WINDOW_WIDTH  = 600
@@ -21,14 +21,13 @@ class Interface(QtGui.QMainWindow):
     """
     def __init__(self):
         self.app = QtGui.QApplication(sys.argv)
-        super().__init__()
+        super(QtGui.QMainWindow, self).__init__()
         self.initUI()
 
     def getAppHandle(self):
         return self.app
         
     def initUI(self):               
-
         self.setWindowTitle('Visu')    
         self.setGeometry(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
                
@@ -60,7 +59,7 @@ class Sprite:
         self.origPixmap = self.item.pixmap()
         self.x = x # position plateau, pas celle sur la fenêtre resizable
         self.y = y
-        self.theta = 0
+        self.theta = theta
         self.scale = scale
         
     def resize(self, scale):
@@ -70,9 +69,9 @@ class Sprite:
     def redraw(self):
         self.item.setX(self.x*self.scale)
         self.item.setY(self.y*self.scale)
-        self.item.setTransformOriginPoint(QPointF(self.origPixmap.width()/2, self.origPixmap.height()/2))
+        self.item.setTransformOriginPoint(QtCore.QPointF(self.origPixmap.width()/2, self.origPixmap.height()/2))
         self.item.setRotation(self.theta)
-        self.item.setTransformOriginPoint(QPointF(0,0))
+        self.item.setTransformOriginPoint(QtCore.QPointF(0,0))
         self.item.setScale(self.scale)
         
     def moveRotate(self, x, y, theta):
@@ -86,22 +85,22 @@ class Sprite:
     
     
     
-class PlateauView(QGraphicsView):
+class PlateauView(QtGui.QGraphicsView):
     def __init__(self, parent=None):
         """
         Plateau QGraphicsView redimmensionnable
         """
         super(PlateauView, self).__init__(parent)
-        self.im_plateau = QPixmap('im/plateau.png')
+        self.im_plateau = QtGui.QPixmap('im/plateau.png')
         
-        self.setHorizontalScrollBarPolicy (Qt.ScrollBarAlwaysOff )
-        self.setVerticalScrollBarPolicy (Qt.ScrollBarAlwaysOff )
+        self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff )
+        self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff )
         
-        self.setViewportUpdateMode(QGraphicsView.FullViewportUpdate)
+        self.setViewportUpdateMode(QtGui.QGraphicsView.FullViewportUpdate)
         
         self.sprites = []
 
-        self.scene = QGraphicsScene()
+        self.scene = QtGui.QGraphicsScene()
         backround_item = self.scene.addPixmap(self.im_plateau)
         self.sprites.append(Sprite(backround_item, 0, 0))
 
@@ -130,10 +129,9 @@ class PlateauView(QGraphicsView):
         Callback appellé lors du redimmensionnement de la fenêtre
         """
         super(PlateauView, self).resizeEvent(event)
-        
+
         size = event.size()
         scale = min(size.width()/WINDOW_WIDTH, size.height()/WINDOW_HEIGHT)
 
         for sprite in self.sprites:
             sprite.resize(scale)
-            

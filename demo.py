@@ -1,4 +1,7 @@
-from sys import exit
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import sys
 from threading import Thread
 from time import sleep
 
@@ -39,6 +42,6 @@ if __name__ == '__main__':
     inter = Interface()
     commander = VisuCommander(inter)
     commander.start()
-    exit(inter.getAppHandle().exec_())
+    sys.exit(inter.getAppHandle().exec_())
 
             
