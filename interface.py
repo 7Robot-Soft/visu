@@ -39,24 +39,15 @@ class Interface(QtGui.QMainWindow):
         self.robot = self.plateauView.addItemToScene("im/robot.png", 30, 10, 0, 1)
         
         
-        #~ self.moveRotateSignal = MoveRorateSignal()
-        #~ self.moveRotateSignal.signal.connect(self.moveRotateRobotSlot)
-
         self.show()
+
         
-    #~ def moveRotateRobot(self, x, y, theta):
-        #~ self.moveRotateSignal.emit(QtCore.SIGNAL("moveRotateRobot"), x, y, theta)
-        #~ print ("emit", x, y, theta)
-        
-    @pyqtSlot(float, float, float, name="moveRotateRobot")
-    def moveRotateRobotSlot(self, x, y, theta):
+
+    def moveRotateRobot(self, x, y, theta):
         print ("received", x, y, theta)
         self.plateauView.moveRotate(self.robot, x, y, theta)
         
 
-#~ class MoveRorateSignal(QtCore.QObject):
-    #~ signal = QtCore.pyqtSignal(float, float, float, name="moveRotateRobot") 
-        
 class Sprite:
     """
     Pour gérer tous les objets avec des images
@@ -66,6 +57,7 @@ class Sprite:
     """
     def __init__(self, item, x=0, y=0, theta=0, scale=1):
         self.item  = item # contient l'image et la position/rot/size du sprite sur la fenêtre
+        self.origPixmap = self.item.pixmap()
         self.x = x # position plateau, pas celle sur la fenêtre resizable
         self.y = y
         self.theta = 0
@@ -76,10 +68,12 @@ class Sprite:
         self.redraw()
         
     def redraw(self):
-        self.item.setScale(self.scale)
         self.item.setX(self.x*self.scale)
         self.item.setY(self.y*self.scale)
+        self.item.setTransformOriginPoint(QPointF(self.origPixmap.width()/2, self.origPixmap.height()/2))
         self.item.setRotation(self.theta)
+        self.item.setTransformOriginPoint(QPointF(0,0))
+        self.item.setScale(self.scale)
         
     def moveRotate(self, x, y, theta):
         self.x = x
@@ -99,7 +93,6 @@ class PlateauView(QGraphicsView):
         """
         super(PlateauView, self).__init__(parent)
         self.im_plateau = QPixmap('im/plateau.png')
-        #QMetaObject.connectSlotsByName(self)
         
         self.setHorizontalScrollBarPolicy (Qt.ScrollBarAlwaysOff )
         self.setVerticalScrollBarPolicy (Qt.ScrollBarAlwaysOff )
