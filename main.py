@@ -1,7 +1,7 @@
+#!/usr/bin/env python3
+
 from sys import exit
-
 from interface import Interface
-
 
 
 if __name__ == '__main__':
