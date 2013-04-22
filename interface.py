@@ -35,7 +35,7 @@ class Interface(QtGui.QMainWindow):
         self.plateauView.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.setCentralWidget(self.plateauView)
         
-        self.robot = self.plateauView.addItemToScene("im/robot.png", 150, 100, 0, 1)
+        self.robot = self.plateauView.addItemToScene("img/robot.png", 150, 100, 0, 1)
         
         
         self.show()
@@ -91,7 +91,7 @@ class PlateauView(QtGui.QGraphicsView):
         Plateau QGraphicsView redimmensionnable
         """
         super(PlateauView, self).__init__(parent)
-        self.im_plateau = QtGui.QPixmap('im/plateau.png')
+        self.img_plateau = QtGui.QPixmap('img/plateau.png')
         
         self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff )
         self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff )
@@ -101,7 +101,7 @@ class PlateauView(QtGui.QGraphicsView):
         self.sprites = []
 
         self.scene = QtGui.QGraphicsScene()
-        backround_item = self.scene.addPixmap(self.im_plateau)
+        backround_item = self.scene.addPixmap(self.img_plateau)
         self.sprites.append(Sprite(backround_item, 0, 0))
 
         self.setScene(self.scene)
@@ -133,7 +133,6 @@ class PlateauView(QtGui.QGraphicsView):
         size = event.size()
         
         self.scene.setSceneRect(0,0,size.width(), size.height())
-        print (self.height())
         scale = min(size.width()/WINDOW_WIDTH, size.height()/WINDOW_HEIGHT)
 
         for sprite in self.sprites:
