@@ -9,6 +9,7 @@ import sys
 
 
 from PyQt4 import QtGui, QtCore
+from settings import X, Y, THETA
 
 # TODO : nettoyer les import
 
@@ -35,7 +36,7 @@ class Interface(QtGui.QMainWindow):
         self.plateauView.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.setCentralWidget(self.plateauView)
         
-        self.robot = self.plateauView.addItemToScene("img/robot.png", 150, 100, 0, 1)
+        self.robot = self.plateauView.addItemToScene("img/robot.png", X, Y, THETA, 1)
         
         
         self.show()
