@@ -8,10 +8,12 @@ import argparse
 import socket
 sys.path.append("../atp")
 from channel import Channel
+from math import pi
 
 def callback(visu, name, args):
     if name == "pos":
-        visu.moveRotateRobot(args["x"], args["y"], args["theta"])
+        #visu.moveRotateRobot(args["x"]*100+150, args["y"]*100+100, -args["theta"]/pi*180)
+        visu.moveRotateRobot((args["x"]+1.5-0.15)*200, (-args["y"]+1-0.15)*200, 90-(args["theta"]/pi*180))
 
 if __name__ == '__main__':
 
